@@ -26,7 +26,7 @@ d3.json(link, function(data) {
     //To
     
     var earthquakeArray = data.features;
-    var lat,lon, mag;
+    var lat,lon, dep, mag;
     var markers = L.circleMarker;
 
   //   var circle = L.circle([51.508, -0.11], {
@@ -41,17 +41,22 @@ d3.json(link, function(data) {
       // Set the data location of the earthquakes to a variable
       console.log(earthquakeArray[i]);
       var location = earthquakeArray[i].geometry;
+      //var property = data.properties;
     
         if (location != null) {
           lat = location.coordinates[1];
           lon = location.coordinates[0];
-          mag = location.coordinates[2];
-          console.log(lat, lon);
+          dep = location.coordinates[2];
+          mag = earthquakeArray[i].properties.mag;
+          var hex = mag.toString(16);
+          //mag = data.properties.mag;
+          console.log(lat, lon, dep, mag, hex);
           //var marker = L.marker([lat, lon]).addTo(myMap);
 
           var circle = L.circleMarker([lat, lon], {
-            color: 'red',
-            radius: mag
+            // color: 'red',
+            fillColor: hex,
+            radius: mag * 10
           }).addTo(myMap);
         }
       }
