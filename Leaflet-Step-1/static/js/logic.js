@@ -26,7 +26,7 @@ d3.json(link, function(data) {
     //To
     
     var earthquakeArray = data.features;
-    var lat,lon, dep, mag, descriptor, hex, place;
+    var lat,lon, dep, mag, descriptor, hex, place, depthColor;
     var markers = L.circleMarker;
 
   //   var circle = L.circle([51.508, -0.11], {
@@ -53,11 +53,20 @@ d3.json(link, function(data) {
           hex = dep.toString(16);
           console.log(lat, lon, dep, mag, hex);
           //var marker = L.marker([lat, lon]).addTo(myMap);
-
+          if (dep <10) {
+            depthColor = "green";
+          }
+            else if (dep <20) {
+            depthColor = "red";
+          }
+            else {
+              depthColor = "purple";
+            }
           var circle = L.circleMarker([lat, lon], {
-            // color: 'red',
-            fillColor: hex,
-            radius: mag * 10
+            color: depthColor,
+            fillColor: depthColor,
+            radius: mag * 10,
+            fillOpacity: 0.5
           }).bindPopup(descriptor).addTo(myMap);
 
           // var marker = L.marker(lat, lon{
